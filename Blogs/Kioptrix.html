@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kioptrix | Ishan Jirety</title>
+    <link rel="stylesheet" href="/Styles.css">
+</head>
+
+<body>
+    <!-- Inserting Nav Bar -->
+
+    <!-- End Of Nav Bar -->
+
+    <header class="hero">
+        <img src="Images/Hero.svg" alt="" class="hero-img">
+        <h1 class="hero-heading"><span class="heading-inverted">Kioptrix Lv 1</span> </h1>
+    </header>
+    <!-- End Of Hero -->
+
+    <!-- Section Begings -->
+    <section class="section">
+        <div class="container container-center">
+            <p>Kioptrix Lv1 was published on https://www.vulnhub.com/entry/kioptrix-level-1-1,22/ the objective of this vulnerable machines is to get root access</p>
+            <br>
+            <h1>How To Start ?</h1>
+            <p>
+                As this machine was locally present as sub machine we can do a basic ARP(Address Resolution Protocol) scan to get its IP, but it didn't worked for me so to discover its ip I did an Nmap scan with all Scripts.</p>
+            <header class="hero">
+                <img src="kioptrix/scan.png" alt="" class="hero-img">
+            </header>
+            <header class="hero">
+                <img src="kioptrix/result.png" alt="" class="hero-img">
+            </header>
+            <header class="hero">
+                <img src="kioptrix/result2.png" alt="" class="hero-img">
+            </header>
+
+            <p>After finding IP of the machine now the original scanning comes into picture</p>
+            <p>From Scan it  was clear that the machine is running</p>
+            <ul class="list list-non-bullet">
+                 <li class ="list-items-inline"><strong>22 TCP SSH</strong></li>
+                 <li class ="list-items-inline"><strong>80 TCP HTTP</strong></li>
+                 <li class ="list-items-inline"><strong>111 TCP rpcbing</strong></li>
+                 <li class ="list-items-inline"><strong>139 TCP SMB (quite vulnerable)</strong></li>
+                 <li class ="list-items-inline"><strong>443 TCP HTTPS</strong></li>
+            </ul>
+            <p>SMB is used by very rare machine and its much vulnerable. First steps first I started investigating 80/443 using</p>
+            <ul class="list list-non-bullet">
+                <li class ="list-items-inline"><strong>nikto</strong></li>
+                <li class ="list-items-inline"><strong>dirbuster</strong></li>
+           </ul>
+           <p>there was nothing much on the port 80 page except information disclouser</p>
+           <header class="hero">
+            <img src="kioptrix/port443.png" alt="" class="hero-img">
+        </header>
+        <p>but there was something fishy in nikto scan it showed<strong> mod_ssl/2.8.4</strong></p> 
+        <header class="hero">
+            <img src="kioptrix/niktoresult.png" alt="" style="max-width: 600px;"class="hero-img">
+        </header>
+        <p>Still it was not much but was something to remember i further moved on with my enumeration and started enumerating SMB using simple SMB shell. Used MsfConsole to find exploits only multi-staged exploit that seemed to be useful was <strong>auxiliary/scanner/smb/smb_version. But still tried traditional method</strong></p>
+        <header class="hero">
+            <img src="kioptrix/SMBClient.png" alt="" style="max-width: 600px;"class="hero-img">
+        </header>
+        <p>It showed many groups but the only group I was looking for was <strong>ADMIN$</strong>and also IPC is not so valueable</p>
+            <header class="hero">
+                <img src="kioptrix/connectingAdmin.png" alt="" style="max-width: 600px;"class="hero-img">
+            </header>
+            <p>it also didn't allowed the only hope was IPC$ after ADMIN$ tried connecting IPC in same way as ADMIN$</p>
+            <header class="hero">
+                <img src="kioptrix/IPC.png" alt="" style="max-width: 600px;"class="hero-img">
+            </header>
+            <p>So the one which was neglected came as a ray of hope it got me in but didn't allowed me to access any file so it was also not the thing which i was looking for. So the last option of enumeration was SSH as its very rare to find any vulnerablility in it but had to try. I tried connecting SSH the traditional way it did gave some important outputs</p>
+            <header class="hero">
+                <img src="kioptrix/ssh-op3.png" alt="" style="max-width: 600px;"class="hero-img">
+            </header>
+            <p>Open SSH gave some exchanges and negotiations after accepting and verifying</p>
+            <header class="hero">
+                <img src="kioptrix/ssh-op2.png" alt="" style="max-width: 600px;"class="hero-img">
+            </header>
+            <h1>It Got Me In :)</h1>
+        </div>
+        <!-- Section Ends -->
+
+    <footer class="footer">
+        <div class="footer-headers" style="font-size:1.5rem;"></div>
+        <ul class="social-links list-non-bullet">
+            <!-- <h1 style="font-size:0.9rem;">Connect With Me On</h1> -->
+            <br>
+            <li class="list-items-inline"><a href="https://github.com/ishanjirety" class="link"><img
+                        src="https://img.icons8.com/fluent/100/000000/github.png" style="max-width: 30px;" /></a></li>
+
+            <li class="list-items-inline"><a href="https://www.linkedin.com/in/ishan-jirety-a1b4a31aa/"
+                    class="link"><img src="https://img.icons8.com/fluent/48/000000/linkedin.png"
+                        style="max-width: 30px;" /></a></li>
+
+            <li class="list-items-inline">
+                <a href="https://twitter.com/IshanJirety" class="link">
+                    <img src="https://img.icons8.com/fluent/48/000000/twitter.png" style="max-width:30px;"/>
+                </a>
+            </li>
+            <br>
+           </ul>
+           <ul class="list-non-bullet">
+            <li class="list-items-inline">Github</li>
+            <li class="list-items-inline">Linkedin</li>
+            <li class="list-items-inline">Twitter</li>
+           </ul>
+    </footer>
+
+</body>
+
+</html>

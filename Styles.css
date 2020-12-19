@@ -5,7 +5,7 @@ h1,h2{
     color:blue
 }
 
-ID 
+ID
 #lib-Header{
     color: grey;
 }
@@ -88,7 +88,7 @@ hr{
     padding-left: 1rem;
     border-bottom-right-radius: 1rem;
     border-bottom-left-radius: 1rem;
-    
+
 }
 .navigation .link{
     color: white;
@@ -103,7 +103,7 @@ hr{
 .navigation .nav-brand{
     font-weight: bold;
     font-size: 1.5rem;
-    text-align: center; 
+    text-align: center;
     padding:10px;
     margin:0px;
     display: inline-block;
@@ -113,9 +113,9 @@ hr{
     font-weight: bold;
 }
 .navigation .nav-logo{
-    max-width: 50px; 
+    max-width: 50px;
     border-radius: 50rem;
-    text-align: center; 
+    text-align: center;
     padding:0px;
     margin:0px;
     display: inline-block;
@@ -138,7 +138,7 @@ hr{
     text-align: center;
 }
 
-/* Highlighting A particualr 
+/* Highlighting A particualr
 text Within text*/
 .hero .heading-inverted{
     color:var(--primary-color);
@@ -172,7 +172,7 @@ text Within text*/
 .footer ul{
     padding-inline-start: 0px;
     /*UserAgent Style Padding
-    Was Applide To Over Right Have to Apply 
+    Was Applide To Over Right Have to Apply
     This Property GOT by Inspect Element*/
 }
 /* DARK MODE AND LIGHT MODE */
@@ -186,7 +186,7 @@ text Within text*/
 #dark-mode-toggle img{
     max-width: 100px;
     height: 40px;
-    
+
 }
 .dark-mode{
     background-color: var(--primary-color);

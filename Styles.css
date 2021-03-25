@@ -219,3 +219,7 @@ text Within text*/
     border-color: white;
     color: white;
 }
+.card{
+  align-items: center;
+  text-align: center;
+}
